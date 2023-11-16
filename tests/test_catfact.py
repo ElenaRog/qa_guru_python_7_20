@@ -14,7 +14,7 @@ def catfact_api(method, url, **kwargs):
     base_url = "https://catfact.ninja"
     new_url = base_url + url
     method = method.upper()
-    with allure.step(f'Отправляем запрос {method} на catfact.ninja{url}   {args if len(args) != 0 else ""} '):
+    with allure.step(f'Отправляем {method} запрос на catfact.ninja{url}. Параметры: {args if len(args) != 0 else "отсутствуют"}'):
         with sessions.Session() as session:
             response = session.request(method=method, url=new_url, **kwargs)
             message = to_curl(response.request)
@@ -32,11 +32,7 @@ def catfact_api(method, url, **kwargs):
                     name="Response Json",
                     attachment_type=AttachmentType.JSON, extension='json')
             except:
-                allure.attach(
-                    body=response.content,
-                    name="Response",
-                    attachment_type=AttachmentType.TEXT,
-                    extension='txt')
+                pass
     return response
 
 
@@ -50,7 +46,7 @@ def test_get_breeds():
     )
 
     assert response.status_code == 200
-    assert response.json()["current_page"] == 1
+    assert response.json()["current_page"] == page
 
 
 def test_breeds_schema_validation():
