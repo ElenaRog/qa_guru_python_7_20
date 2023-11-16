@@ -1,0 +1,6 @@
+pytest
+allure-pytest
+selene ==2.0.0rc4
+requests~=2.31.0
+jsonschema~=4.19.2
+curlify~=2.2.1
